@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  category: MyString
+  vendor: MyString
+  description: MyString
+  paid_by: MyString
+  amount: 1.5
+
+two:
+  category: MyString
+  vendor: MyString
+  description: MyString
+  paid_by: MyString
+  amount: 1.5
