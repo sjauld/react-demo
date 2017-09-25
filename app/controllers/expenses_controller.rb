@@ -22,6 +22,26 @@ class ExpensesController < ApplicationController
     end
   end
 
+  # PUT /expenses/:id
+  # PUT /expenses/:id.json
+  def update
+    @expense = Expense.find params.fetch(:id)
+
+    if @expense.update(expense_params)
+      render json: @expense
+    else
+      render json: @expense.errors, status: :unprocessable_entity
+    end
+  end
+
+  # DELETE /expenses/:id
+  # DELETE /expenses/:id.json
+  def destroy
+    @expense = Expense.find params.fetch(:id)
+    @expense.destroy
+    head :no_content
+  end
+
   private
 
   def expense_params

@@ -1,0 +1,10 @@
+extends: google
+
+parser: babel-eslint
+
+plugins:
+  - react
+
+rules:
+  no-invalid-this: 0
+  react/jsx-uses-vars: 2

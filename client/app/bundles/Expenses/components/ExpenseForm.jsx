@@ -1,14 +1,15 @@
 import React from 'react';
 
-const initialState = { amount:      '',
-                       category:    '',
-                       description: '',
-                       paid_by:     '',
-                       vendor:      '', };
+const initialState = {amount: '',
+                      category: '',
+                      description: '',
+                      paid_by: '',
+                      vendor: ''};
 
+/** A form to create new expenses */
 export default class ExpenseForm extends React.Component {
   /**
-   * @param props - Comes from your rails view.
+   * @param {object} props - Comes from your rails view.
    */
   constructor(props) {
     super(props);
@@ -18,29 +19,44 @@ export default class ExpenseForm extends React.Component {
     this.state = initialState;
   }
 
+  /**
+   * Handles changes to the form
+   * @param {object} e the event
+   */
   handleChange = (e) => {
-    this.setState({[e.target.name]: e.target.value})
+    this.setState({[e.target.name]: e.target.value});
   }
 
+  /**
+   * Handles form submission
+   * @param {object} e the event
+   */
   handleSubmit = (e) => {
     e.preventDefault();
     $.post('',
-           { expense: this.state },
+           {expense: this.state},
            (data) => {
-             this.props.handleNewRecord(data)
-             this.setState(initialState)
+             this.props.handleNewExpense(data);
+             this.setState(initialState);
            },
-           'JSON')
+           'JSON');
   }
 
+  /**
+   * Checks if the form is ready to submit
+   * @return {boolean}
+   */
   valid = () => {
-    return this.state.amount &&
+    return this.state.amount > 0 &&
              this.state.category &&
              this.state.description &&
              this.state.paid_by &&
-             this.state.vendor
+             this.state.vendor;
   }
 
+  /**
+   * @return {object} the jsx markup
+   */
   render() {
     return (
       <form className="form-horizontal"
@@ -84,19 +100,20 @@ export default class ExpenseForm extends React.Component {
         <div className="input-group form-group">
           <label className="input-group-addon">Amount</label>
           <input className="form-control"
+                 min="0"
                  name="amount"
                  onChange={this.handleChange}
                  placeholder="69"
-                 type="text"
+                 type="number"
                  value={this.state.amount} />
         </div>
         <button className="btn btn-primary"
                 disabled={!this.valid()}
                 type="submit">
           <i className="fa fa-plus" />
-          Add Expense
+          &nbsp;Add Expense
         </button>
       </form>
-    )
+    );
   }
 }
